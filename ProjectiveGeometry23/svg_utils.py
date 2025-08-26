@@ -49,9 +49,22 @@ import svg_snip.Elements as e2d
 import svg_snip.Elements3D as e3d
 
 import ProjectiveGeometry23.utils as pgu
+from ProjectiveGeometry23 import pluecker
 
 from ProjectiveGeometry23.central_projection import ProjectionMatrix
 from ProjectiveGeometry23.source_detector_geometry import SourceDetectorGeometry
+
+
+def svg_coordinate_frame(P, size=100, **kwargs):
+    """Draw a coordinate system of default size 100."""
+    el = [
+        '<g>',
+        # Coordinate frame
+        e3d.line(P=P, X1=[0,0,0,1], X2=[size,0,0,1], stroke='red', **kwargs),
+        e3d.line(P=P, X1=[0,0,0,1], X2=[0,size,0,1], stroke='green', **kwargs),
+        e3d.line(P=P, X1=[0,0,0,1], X2=[0,0,size,1], stroke='blue', **kwargs)
+    ]
+    return '\n  '.join(el) + '\n</g>\n'
 
 
 def svg_world_geometry(P, **kwargs):
@@ -109,12 +122,20 @@ def svg_source_detector(P, projection: ProjectionMatrix, draw_on_detector=None, 
     return '\n<!-->Source Detector Geometry<-->\n' + detector + '\n  '.join(el) + '\n</g>\n'
 
 
-def svg_homogeneous_line(l, composer: Composer, **kwargs):
+def svg_homogeneous_line(l, composer: Composer, stroke="yellow", **kwargs):
     """Draw a 2D line given in homogeneous coordinates.
-        Note: renderer is passed in automatically via svg.Renderer.
+        Note: composer is passed in automatically via svg.Renderer.
     """
-    w, h = renderer.image_size
+    w, h = composer.image_size
     l = pgu.cvec(l)
     x1, y1, x2, y2 = pgu.intersectLineWithRect(l, w, h)
-    return e2d.line(x1=x1, y1=y1, x2=x2, y2=y2, **kwargs)
+    if not all(isinstance(v, float) for v in [x1, y1, x2, y2]):
+        return ""
+    return e2d.line(x1=x1, y1=y1, x2=x2, y2=y2, composer=composer, stroke=stroke, **kwargs)
+
+
+def svg_pluecker_line(P, L, **kwargs):
+    """Draw a 3D line given in plucker coordinates."""
+    l = pluecker.project(L, P)
+    return svg_homogeneous_line(l, **kwargs)
     

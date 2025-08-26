@@ -1,0 +1,4 @@
+numpy
+scipy
+# Optional for visualization
+svg_snip
