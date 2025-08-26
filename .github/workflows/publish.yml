@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+  id-token: write  # Required for OIDC token-based authentication
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
