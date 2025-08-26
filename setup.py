@@ -8,7 +8,10 @@ setup(
     author_email='aaichert@gmail.com',
     url='https://github.com/aaichert/ProjectiveGeometry23',
     packages=find_packages(),
-    install_requires=[],
+    install_requires=[
+        'numpy',
+        'scipy'
+    ],
     extras_require={
         'svg': ['svg_snip']
     },
