@@ -1,29 +1,87 @@
-name: Publish
+name: Build and Publish to PyPI
 
 on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   release:
     types: [published]
 
 permissions:
   contents: read
-  id-token: write  # Required for OIDC token-based authentication
 
 jobs:
-  build-and-publish:
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.12"]
+
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  # Fetch full history for setuptools-scm
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build pytest
+          pip install -e .
+
+      - name: Test package installation
+        run: |
+          python -c "import ProjectiveGeometry23; print('Package imported successfully')"
+          python -c "from ProjectiveGeometry23 import utils; print('Package module imported successfully')"
+
+      - name: Run tests
+        run: pytest
+
+      - name: Build package
+        run: python -m build
+
+      - name: Check distribution
+        run: |
+          python -m pip install --upgrade pip
+          pip install twine
+          twine check dist/*
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
+    environment:
+      name: pypi
+      url: https://pypi.org/project/ProjectiveGeometry23
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  # Fetch full history for setuptools-scm
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-      - name: Build package
+          python-version: "3.12"
+
+      - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
           pip install build
-          python -m build
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.8.10
+
+      - name: Build package
+        run: python -m build
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
