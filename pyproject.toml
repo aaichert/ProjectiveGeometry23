@@ -1,6 +1,47 @@
 [build-system]
 requires = [
-    "setuptools>=42",
-    "wheel"
+    "setuptools>=64",
+    "setuptools-scm[toml]>=8.0"
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "ProjectiveGeometry23"
+readme = "README.md"
+dynamic = ["version"]
+description = "A 2D and 3D projective geometry library with Plücker coordinates and projection matrix, including (X-ray) source-detector geometry model."
+requires-python = ">=3.6"
+license = "Apache-2.0"
+authors = [
+    {name = "Andre Aichert", email = "aaichert@gmail.com"},
+]
+keywords = [
+    "projective-geometry",
+    "homogeneous-coordinates",
+    "plucker-coordinates",
+    "pinhole-camera",
+    "projection-matrix",
+    "computer-vision",
+    "xray-geometry",
+    "computed-tomography",
+    "camera-calibration",
+    "multiple-view-geometry",
+    "epipolar-geometry"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dependencies = [
+    "numpy",
+]
+
+[tool.setuptools_scm]
+write_to = "ProjectiveGeometry23/_version.py"
+fallback_version = "0.0.1-local"
