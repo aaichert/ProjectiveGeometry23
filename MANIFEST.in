@@ -1,4 +1,21 @@
 include README.md
 include LICENSE
+include pyproject.toml
+
 recursive-include ProjectiveGeometry23 *.py
 include source_detector_geometry.png
+
+# Include example notebooks or docs
+recursive-include notebooks *.ipynb
+
+# Exclude build/cache artifacts
+global-exclude *.py[cod]
+global-exclude __pycache__
+global-exclude .DS_Store
+global-exclude *.so
+global-exclude *.dylib
+global-exclude *.egg-info
+global-exclude .ipynb_checkpoints
+
+
+
