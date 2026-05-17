@@ -40,6 +40,7 @@ classifiers = [
 ]
 dependencies = [
     "numpy",
+    "scipy",
 ]
 
 [tool.setuptools_scm]
