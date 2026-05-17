@@ -2,7 +2,6 @@ from setuptools import setup, find_packages
 
 setup(
     name='ProjectiveGeometry23',
-    version='0.1.0',
     description='Projective geometry in 2D and 3D with homogeneous and Plücker coordinates, projection matrices, and visualization.',
     author='Andre Aichert',
     author_email='aaichert@gmail.com',
