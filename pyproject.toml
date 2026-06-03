@@ -10,11 +10,14 @@ name = "ProjectiveGeometry23"
 readme = "README.md"
 dynamic = ["version"]
 description = "A 2D and 3D projective geometry library with Plücker coordinates and projection matrix, including (X-ray) source-detector geometry model."
-requires-python = ">=3.6"
+requires-python = ">=3.8"
 license = "Apache-2.0"
 authors = [
     {name = "Andre Aichert", email = "aaichert@gmail.com"},
 ]
+homepage = "https://github.com/aaichert/ProjectiveGeometry23"
+repository = "https://github.com/aaichert/ProjectiveGeometry23"
+documentation = "https://github.com/aaichert/ProjectiveGeometry23#readme"
 keywords = [
     "projective-geometry",
     "homogeneous-coordinates",
@@ -42,6 +45,9 @@ dependencies = [
     "numpy",
     "scipy",
 ]
+
+[project.optional-dependencies]
+svg = ["svg_snip"]
 
 [tool.setuptools_scm]
 write_to = "ProjectiveGeometry23/_version.py"
