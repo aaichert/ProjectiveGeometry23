@@ -69,7 +69,7 @@ vis.display()
 
 ```
 
-![source_detector_geometry.png](source_detector_geometry.png)
+![source_detector_geometry.png](https://raw.githubusercontent.com/aaichert/ProjectiveGeometry23/main/source_detector_geometry.png)
 
 ## Installation
 
