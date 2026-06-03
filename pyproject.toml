@@ -15,9 +15,6 @@ license = "Apache-2.0"
 authors = [
     {name = "Andre Aichert", email = "aaichert@gmail.com"},
 ]
-homepage = "https://github.com/aaichert/ProjectiveGeometry23"
-repository = "https://github.com/aaichert/ProjectiveGeometry23"
-documentation = "https://github.com/aaichert/ProjectiveGeometry23#readme"
 keywords = [
     "projective-geometry",
     "homogeneous-coordinates",
@@ -49,6 +46,11 @@ dependencies = [
 [project.optional-dependencies]
 svg = ["svg_snip"]
 
+[project.urls]
+Homepage = "https://github.com/aaichert/ProjectiveGeometry23"
+Repository = "https://github.com/aaichert/ProjectiveGeometry23"
+Documentation = "https://github.com/aaichert/ProjectiveGeometry23#readme"
+
 [tool.setuptools_scm]
 write_to = "ProjectiveGeometry23/_version.py"
-fallback_version = "0.0.1-local"
+fallback_version = "0.0.1.dev0"
