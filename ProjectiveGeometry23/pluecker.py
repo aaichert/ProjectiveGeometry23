@@ -8,8 +8,9 @@ import numpy as np
 from .utils import dot, cvec, append
 from .utils import homogenize, dehomogenize, RP3Point
 from scipy.optimize import minimize
+from scipy.linalg import expm
 
-
+    
 def join_points(A, B):
     """Join two points to form a 3D line."""
     A = A.flatten()
@@ -139,6 +140,14 @@ def matrix(L):
     ])
     return B
 
+def rotation(L, angle):
+    """4x4 homography to rotate about a 3D line."""
+    Xi = matrix(L)
+    s = np.linalg.norm(direction(L))
+    Xi /= s
+    Xi[3, :] = 0
+
+    return expm(angle * Xi)
 
 def projection_matrix(P):
     """Compute Sturm-style projection matrix for central projection of Plücker lines. Projection from Plücker coordinates directly to 2D lines written in a single 3x6 matrix. P is a standard 3x4 projection matrix."""
