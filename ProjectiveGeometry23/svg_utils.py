@@ -96,7 +96,9 @@ def svg_source_detector(P, projection: ProjectionMatrix, draw_on_detector=None, 
     # Handle projection tracking on detector if geometry function is passed
     if draw_on_detector is not None:
         T_detector = sdg.central_projection_3d
-        group.add(draw_on_detector, P=P@T_detector, **kwargs)
+        def wrapped_draw_on_detector(P, **kwargs):
+            return draw_on_detector(P=P @ T_detector, **kwargs)
+        group.add(wrapped_draw_on_detector, P=P, **kwargs)
 
     # Source position
     group.add(e3d.point, P=P, X=C, r=1, fill="black")
@@ -140,5 +142,5 @@ def svg_pluecker_line(P, L, composer=None, **kwargs):
     """Draw a 3D line given in plucker coordinates."""
     l = pluecker.project(L, P)
     group = Group("Plücker Line")
-    group.add(svg_homogeneous_line, l, **kwargs)
+    group.add(svg_homogeneous_line, l=l, **kwargs)
     return group
